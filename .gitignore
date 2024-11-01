@@ -20,6 +20,10 @@ pids
 node_modules/
 jspm_packages/
 
+# Test + dist directory
+test/
+dist/
+
 # TypeScript cache
 *.tsbuildinfo
 

@@ -1,3 +1,24 @@
+interface ClassInstance {
+  domain: string;
+  path: string;
+  name: string;
+}
+
+interface InstanceSession {
+  domain: string;
+  path: string;
+
+  loggedIn?: boolean;
+  token?: string;
+  cookie?: string;
+  date?: Date;
+}
+
+interface InstanceCredentials {
+  username: string;
+  password: string;
+}
+
 // Table `matieres`
 interface Matiere {
   id: number; // Identifiant unique
