@@ -19,6 +19,33 @@ interface InstanceCredentials {
   password: string;
 }
 
+/**
+ * Définitions de l'arbre des documents du cahier
+ */
+interface TreeSubject {
+  id: number;
+  name: string;
+  folder: number;
+}
+
+interface TreeFolder {
+  id?: number;
+  name: string;
+  path: string;
+  children: TreeFolder[];
+  documents: TreeDocument[];
+}
+
+interface TreeDocument {
+  id: number;
+  name: string;
+  format: string;
+}
+
+/**
+ * Internal types
+ */
+
 // Table `matieres`
 interface Matiere {
   id: number; // Identifiant unique
@@ -39,7 +66,7 @@ interface Matiere {
 }
 
 // Table `utilisateurs`
-interface Utilisateur {
+interface DatabaseUtilisateur {
   id: number; // Identifiant unique
   login: string; // Identifiant de connexion
   nom: string; // Nom de l'utilisateur
@@ -58,7 +85,7 @@ interface Utilisateur {
 }
 
 // Table `pages`
-interface Page {
+interface DatabasePage {
   id: number; // Identifiant unique
   ordre: number; // Ordre d'affichage
   cle: string; // Clé de la page
@@ -71,7 +98,7 @@ interface Page {
 }
 
 // Table `infos`
-interface Info {
+interface DatabaseInfo {
   id: number; // Identifiant unique
   ordre: number; // Ordre d'affichage
   page: number; // Page associée
@@ -84,7 +111,7 @@ interface Info {
 }
 
 // Table `semaines`
-interface Semaine {
+interface DatabaseSemaine {
   id: number; // Identifiant unique
   debut: Date; // Date de début de la semaine
   colle: 0 | 1; // Indique si semaine de colle (0: non, 1: oui)
@@ -92,13 +119,13 @@ interface Semaine {
 }
 
 // Table `vacances`
-interface Vacance {
+interface DatabaseVacance {
   id: number; // Identifiant unique
   nom: string; // Nom de la période de vacances
 }
 
 // Table `progcolles`
-interface Progcolle {
+interface DatabaseProgcolle {
   id: number; // Identifiant unique
   semaine: number; // Semaine associée
   matiere: number; // Matière associée
@@ -108,7 +135,7 @@ interface Progcolle {
 }
 
 // Table `cdt`
-interface Cdt {
+interface DatabaseCdt {
   id: number; // Identifiant unique
   matiere: number; // Matière associée
   semaine: number; // Semaine associée
@@ -124,7 +151,7 @@ interface Cdt {
 }
 
 // Table cdt-types
-interface CdtType {
+interface DatabaseCdtType {
   id: number; // ID unique du type de "CDT"
   matiere: number; // ID de la matière associée
   ordre: number; // Ordre d'affichage
@@ -135,7 +162,7 @@ interface CdtType {
 }
 
 // Table cdt-seances
-interface CdtSeance {
+interface DatabaseCdtSeance {
   id: number; // ID de la séance
   matiere: number; // ID de la matière associée
   ordre: number; // Ordre de la séance
@@ -149,7 +176,7 @@ interface CdtSeance {
   template: string; // Contenu du modèle de séance
 }
 
-interface Folder {
+interface DatabaseFolder {
   id: number; // ID du répertoire
   parent: number; // ID du répertoire parent
   parents: string; // Liste des parents hiérarchiques
@@ -161,7 +188,7 @@ interface Folder {
 }
 
 // Table docs
-interface Doc {
+interface DatabaseDoc {
   id: number; // ID du document
   parent: number; // ID du répertoire parent
   parents: string; // Liste des parents hiérarchiques
@@ -177,7 +204,7 @@ interface Doc {
 }
 
 // Table recents
-interface Recent {
+interface DatabaseRecent {
   id: number; // ID unique de l'élément récent
   type: number; // Type d'élément
   publi: Date; // Date de publication
@@ -190,7 +217,7 @@ interface Recent {
 }
 
 // Table notescolles
-interface NoteColle {
+interface DatabaseNoteColle {
   id: number; // ID de la note
   semaine: number; // Semaine associée
   heure: number; // Heure associée
@@ -202,7 +229,7 @@ interface NoteColle {
 }
 
 // Table heurescolles
-interface HeureColle {
+interface DatabaseHeureColle {
   id: number; // ID de l'heure de colle
   colleur: number; // ID du colleur
   matiere: number; // ID de la matière associée
@@ -215,7 +242,7 @@ interface HeureColle {
 }
 
 // Table groupes
-interface Groupe {
+interface DatabaseGroupe {
   id: number; // ID du groupe
   nom: string; // Nom du groupe
   nom_nat: string; // Nom natif du groupe
@@ -225,7 +252,7 @@ interface Groupe {
 }
 
 // Table agenda
-interface Agenda {
+interface DatabaseAgenda {
   id: number; // ID de l'événement
   matiere: number; // ID de la matière associée
   type: number; // Type d'événement
@@ -239,7 +266,7 @@ interface Agenda {
 }
 
 // Table agenda-types
-interface AgendaType {
+interface DatabaseAgendaType {
   id: number; // ID du type d'événement
   nom: string; // Nom du type d'événement
   matiere: number; // ID de la matière associée
@@ -252,13 +279,13 @@ interface AgendaType {
 }
 
 // Table prefs
-interface Pref {
+interface DatabasePref {
   nom: string; // Nom de la préférence
   val: number; // Valeur associée
 }
 
 // Table transferts
-interface Transfert {
+interface DatabaseTransfert {
   id: number; // ID du transfert
   type: number; // Type de transfert
   matiere: number; // ID de la matière associée
@@ -271,7 +298,7 @@ interface Transfert {
 }
 
 // Table transdocs
-interface Transdoc {
+interface DatabaseTransdoc {
   id: number; // ID du document de transfert
   transfert: number; // ID du transfert associé
   eleve: number; // ID de l'élève
